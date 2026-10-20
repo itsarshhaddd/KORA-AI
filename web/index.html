@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#080b14">
+  <title>KORA</title>
+  <link rel="icon" href="/kora_logo.ico">
+  <link rel="stylesheet" href="style.css">
+<script>
+(function(){var K="kora_appearance",D={theme:"dark",accent:"auto",custom:"#8b6cff",glass:false,navglass:true,blur:16,alpha:60,glow:false,size:100,round:100,motion:true,font:"default",density:"comfortable",bg:"plain",bubble:"soft",width:"medium"},
+A={violet:["#8b6cff","#b5a1ff","#fff"],blue:["#4c8dff","#93bbff","#fff"],teal:["#1fbfa6","#72e3d0","#04201b"],green:["#3ddc97","#94f0c6","#05210f"],amber:["#f2a33a","#ffd08a","#241500"],rose:["#f0567f","#ffa0ba","#fff"]},
+L={light:1,sand:1,sakura:1,mint:1,sky:1},W={narrow:"760px",medium:"940px",wide:"1180px"};
+function ck(n){var m=document.cookie.match(new RegExp("(?:^|; )"+n+"=([^;]*)"));return m?decodeURIComponent(m[1]):null}
+var S={get:function(k){var v=null;try{v=localStorage.getItem(k)}catch(e){}if(v==null)v=ck(k);if(v!=null){try{localStorage.setItem(k,v)}catch(e){}}return v},
+set:function(k,v){var ok=false;try{localStorage.setItem(k,v);ok=localStorage.getItem(k)===v}catch(e){}try{document.cookie=k+"="+encodeURIComponent(v)+"; max-age=315360000; path=/; SameSite=Lax";if(ck(k)===v)ok=true}catch(e){}return ok},
+del:function(k){try{localStorage.removeItem(k)}catch(e){}try{document.cookie=k+"=; max-age=0; path=/"}catch(e){}}};
+function load(){try{return Object.assign({},D,JSON.parse(S.get(K)||"{}"))}catch(e){return Object.assign({},D)}}
+function apply(p){var r=document.documentElement,s=r.style,t=p.theme==="system"?(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"):p.theme,c;
+r.dataset.theme=t;r.dataset.mode=L[t]?"light":"dark";
+if(p.accent==="auto"){["--ac","--ac2","--on-ac"].forEach(function(k){s.removeProperty(k)})}
+else{if(p.accent==="custom"){var x=p.custom||"#8b6cff",n=parseInt(x.slice(1),16),l=(0.299*(n>>16)+0.587*((n>>8)&255)+0.114*(n&255))/255;c=[x,"color-mix(in srgb,"+x+" 60%,#fff)",l>0.6?"#111":"#fff"]}else c=A[p.accent]||A.violet;
+s.setProperty("--ac",c[0]);s.setProperty("--ac2",c[1]);s.setProperty("--on-ac",c[2])}
+r.classList.toggle("glass",!!p.glass);r.classList.toggle("navglass",p.navglass!==false);r.classList.toggle("glow",!!p.glow);r.dataset.motion=p.motion?"on":"off";
+r.dataset.font=p.font;r.dataset.density=p.density;r.dataset.bg=p.bg;r.dataset.bubble=p.bubble;
+s.setProperty("--msgw",W[p.width]||W.medium);s.setProperty("--glass-blur",p.blur+"px");s.setProperty("--glass-a",p.alpha+"%");s.setProperty("--ui-scale",p.size/100);s.setProperty("--rs",p.round/100)}
+function save(p){p._t=Date.now();return S.set(K,JSON.stringify(p))}
+window.kstore=S;window.koraAppearance={load:load,apply:apply,save:save,def:D};apply(load())})();
+</script>
+</head>
+<body>
+  <div class="titlebar" id="titlebar">
+    <div class="titlebar-drag pywebview-drag-region">
+      <span class="titlebar-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+      <span class="titlebar-title">KORA</span>
+    </div>
+    <div class="titlebar-controls">
+      <button class="titlebar-btn" id="winMinBtn" type="button" aria-label="Minimize">
+        <svg viewBox="0 0 10 10"><path d="M1.5 5h7" /></svg>
+      </button>
+      <button class="titlebar-btn" id="winMaxBtn" type="button" aria-label="Maximize">
+        <svg viewBox="0 0 10 10"><rect x="1.5" y="1.5" width="7" height="7" rx="1" /></svg>
+      </button>
+      <button class="titlebar-btn close" id="winCloseBtn" type="button" aria-label="Close">
+        <svg viewBox="0 0 10 10"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7" /></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="boot" id="bootScreen" role="status" aria-live="polite">
+    <div class="boot-card">
+      <div class="hero-mark boot-mark" aria-hidden="true"><span class="kora-mark"><span></span><span></span><span></span><span></span></span></div>
+      <p class="boot-eyebrow">KORA</p>
+      <p class="boot-msg" id="bootMsg">Starting your local knowledge workspace…</p>
+      <div class="boot-bar"><span id="bootBar"></span></div>
+      <div class="boot-meta"><span id="bootStep">Starting</span><span id="bootPct">0%</span></div>
+      <button class="ghost-btn boot-skip" id="bootSkip" type="button" hidden>Continue anyway</button>
+      <p class="boot-foot">Everything runs locally on this computer.</p>
+    </div>
+  </div>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <div class="brand-row">
+        <div class="kora-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+        <span class="brand-name">KORA</span>
+      </div>
+
+      <button class="new-chat" id="newChatBtn" type="button">
+        <span class="icon">＋</span><span class="sidebar-label">New Chat</span>
+      </button>
+
+      <nav class="side-nav" aria-label="Primary">
+        <button class="nav-item active" data-view="home" type="button"><span class="nav-icon">⌂</span><span class="sidebar-label">Home</span></button>
+        <button class="nav-item" data-view="chat" type="button"><span class="nav-icon">◌</span><span class="sidebar-label">Chat</span></button>
+        <button class="nav-item" data-view="library" type="button"><span class="nav-icon">▥</span><span class="sidebar-label">Library</span></button>
+        <button class="nav-item" data-view="documents" type="button"><span class="nav-icon">▤</span><span class="sidebar-label">Documents</span></button>
+        <button class="nav-item" data-view="knowledge" type="button"><span class="nav-icon">◇</span><span class="sidebar-label">Knowledge Base</span></button>
+      </nav>
+
+      <div class="sidebar-spacer"></div>
+      <button class="nav-item" data-view="settings" type="button"><span class="nav-icon">⚙</span><span class="sidebar-label">Settings</span></button>
+      <button class="sidebar-profile" id="sidebarProfileButton" type="button" aria-label="Open Settings">
+        <span class="mini-avatar" id="profileAvatar">L</span>
+        <span class="profile-copy"><strong id="sidebarProfileName">Local user</strong><span>Local profile</span></span>
+      </button>
+    </aside>
+
+    <main class="main-shell">
+      <header class="topbar">
+        <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu"><span class="kora-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span></button>
+        <span class="top-title" id="topTitle">Home</span>
+        <div class="top-actions">
+          <button class="profile-chip" id="profileButton" type="button">
+            <span class="avatar" id="topAvatar">L</span>
+            <span id="topProfileName">Local user</span>
+            <span class="chevron">⌄</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="content-scroll" id="contentScroll">
+        <section class="view active" id="view-home">
+          <div class="home-hero">
+            <div class="hero-mark" aria-hidden="true"><span class="kora-mark"><span></span><span></span><span></span><span></span></span></div>
+            <div class="home-status" id="homeStatus"><i></i><span>Checking…</span></div>
+            <h1 id="homeGreeting">Good evening</h1>
+            <p class="hero-sub">Ask questions, search your documents, or work with your knowledge base.</p>
+            <div class="ask-card">
+              <div class="ask-row">
+                <span class="search-icon big">⌕</span>
+                <input id="homeAskInput" placeholder="What would you like to know?" autocomplete="off">
+                <button class="attach-btn" id="homeAttachBtn" aria-label="Upload">⌕</button>
+                <button class="send-btn" id="homeSendBtn" aria-label="Ask KORA">➤</button>
+              </div>
+            </div>
+            <div class="suggestion-row">
+              <button class="prompt-chip" data-prompt="Summarize my documents">Summarize documents</button>
+              <button class="prompt-chip" data-prompt="Find information about this topic">Find information</button>
+              <button class="prompt-chip" data-prompt="Compare the relevant documents">Compare documents</button>
+              <button class="prompt-chip" data-prompt="Create concise notes from the relevant sources">Create notes</button>
+            </div>
+          </div>
+
+          <div class="stat-strip" id="metricGrid">
+            <button class="stat" data-view-target="documents"><span class="metric-icon cyan">▤</span><span class="stat-copy"><strong id="metricDocuments">—</strong><small>Documents</small></span></button>
+            <button class="stat" data-view-target="knowledge"><span class="metric-icon green">#</span><span class="stat-copy"><strong id="metricRecords">—</strong><small>Records</small></span></button>
+            <button class="stat" data-view-target="library"><span class="metric-icon purple">◌</span><span class="stat-copy"><strong id="metricConversations">—</strong><small>Conversations</small></span></button>
+            <button class="stat" data-view-target="knowledge"><span class="metric-icon orange">◇</span><span class="stat-copy"><strong id="metricIndexStatus">—</strong><small>Index</small></span></button>
+          </div>
+
+          <div class="action-row">
+            <button class="action-card" id="homeUploadBtn"><span class="ac-icon">↥</span><span class="ac-copy"><strong>Upload documents</strong><small>Add files to your workspace</small></span><span class="ac-arrow">→</span></button>
+            <button class="action-card" data-view-target="library"><span class="ac-icon">◌</span><span class="ac-copy"><strong>Chat library</strong><small>Revisit past conversations</small></span><span class="ac-arrow">→</span></button>
+            <button class="action-card" data-view-target="knowledge"><span class="ac-icon">◇</span><span class="ac-copy"><strong>Knowledge index</strong><small>Check documents and indexing</small></span><span class="ac-arrow">→</span></button>
+          </div>
+
+          <div class="home-columns">
+            <div class="panel-card">
+              <div class="panel-head"><div><strong>Recent documents</strong><span>Latest files in your workspace</span></div><button class="text-btn" data-view-target="documents">View all →</button></div>
+              <div id="recentDocuments" class="list-stack"></div>
+            </div>
+            <div class="panel-card">
+              <div class="panel-head"><div><strong>Recent conversations</strong><span>Local chat history</span></div><button class="text-btn" data-view-target="library">View all →</button></div>
+              <div id="recentConversations" class="list-stack"></div>
+            </div>
+          </div>
+
+          <div class="index-strip" id="indexStrip" hidden>
+            <div><span class="pulse-dot"></span><strong id="indexStripTitle">Updating knowledge base…</strong><span id="indexStripMessage">Working</span></div>
+            <div class="progress-shell"><span id="indexStripBar"></span></div>
+            <button class="ghost-btn" data-view-target="knowledge">Details</button>
+          </div>
+        </section>
+
+        <section class="view" id="view-chat">
+          <div class="chat-layout">
+            <aside class="chat-sidebar panel-card">
+              <div class="panel-head"><div><strong>Conversations</strong><span>Local chat history</span></div><button class="icon-btn small" id="chatSearchBtn">⌕</button></div>
+              <input id="chatFilter" class="inline-search" placeholder="Search conversations...">
+              <div id="chatList" class="chat-list"></div>
+            </aside>
+            <div class="chat-main">
+              <div class="chat-head">
+                <div><h2 id="chatTitle">New conversation</h2></div>
+                <div class="chat-head-actions">
+                  <div class="export-wrap">
+                    <button class="chat-new-btn export-btn" id="exportBtn" type="button" aria-haspopup="true" aria-expanded="false" title="Export this conversation" disabled><svg viewBox="0 0 24 24" class="i"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 19h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Export</button>
+                    <div class="export-menu" id="exportMenu" hidden>
+                      <button type="button" data-export="pdf"><strong>PDF document</strong><span>Formatted, with images and sources</span></button>
+                      <button type="button" data-export="md"><strong>Markdown</strong><span>Plain text you can edit</span></button>
+                    </div>
+                  </div>
+                  <button class="chat-new-btn" id="chatNewBtn" type="button"><span class="icon">＋</span>New chat</button>
+                  <div class="status-pill" id="statusPill"><span class="status-dot" id="statusDot"></span><span id="statusLabel">Starting KORA…</span></div>
+                </div>
+              </div>
+              <div class="chat-scroll" id="chatScroll">
+                <div class="chat-hero" id="chatHero">
+                  <p class="chat-grounding">Ask about your workspace or ask KORA a general question. Sources appear when workspace information is used.</p>
+                  <div class="hero-prompts">
+                    <button class="prompt-card" data-prompt="What are the key policies in my documents?">What are the key policies?</button>
+                    <button class="prompt-card" data-prompt="Summarize the most important information in my documents">Summarize my documents</button>
+                    <button class="prompt-card" data-prompt="List the documents currently in my workspace">Show my documents</button>
+                  </div>
+                </div>
+                <div id="messages"></div>
+              </div>
+              <form class="composer" id="composerForm">
+                <div class="attach-tray" id="attachTray" hidden></div>
+                <div class="rec-bar" id="recBar" hidden>
+                  <span class="rec-dot"></span>
+                  <span class="rec-label" id="recLabel">Listening…</span>
+                  <canvas class="rec-wave" id="recWave"></canvas>
+                  <span class="rec-time" id="recTime">0:00</span>
+                  <button type="button" class="comp-btn" id="recCancel" title="Cancel (Esc)" aria-label="Cancel recording"><svg viewBox="0 0 24 24" class="i"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+                  <button type="button" class="comp-btn rec-done" id="recDone" title="Stop and send" aria-label="Finish recording"><svg viewBox="0 0 24 24" class="i"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                </div>
+                <div class="composer-row">
+                  <button type="button" class="comp-btn" id="attachMediaBtn" title="Attach an image or audio" aria-label="Attach image or audio"><svg viewBox="0 0 24 24" class="i"><path d="M20 11.5l-7.8 7.8a5 5 0 0 1-7.1-7.1l8.5-8.5a3.3 3.3 0 0 1 4.7 4.7l-8.5 8.5a1.7 1.7 0 0 1-2.4-2.4l7.8-7.8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                  <input type="file" id="mediaFileInput" accept="image/*,audio/*" multiple hidden>
+                  <textarea id="composerInput" rows="1" placeholder="Ask anything, attach an image, or press the mic…"></textarea>
+                  <button type="button" class="comp-btn mic-btn" id="micBtn" title="Voice command (Ctrl+M)" aria-label="Voice command"><svg viewBox="0 0 24 24" class="i"><rect x="9" y="3" width="6" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
+                  <button class="send-btn" id="sendBtn" type="submit">➤</button>
+                </div>
+                <div class="drop-hint">Drop an image or audio clip to attach it</div>
+              </form>
+              <div class="composer-hint">Enter to send · Shift + Enter for a new line · <button type="button" class="hint-toggle" id="voiceModeBtn">Voice: auto-send</button></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="view-documents">
+          <div class="page-head"><div><h1>Documents</h1><p class="page-subtitle">Browse, inspect and manage the files KORA knows about.</p></div><div class="head-actions"><button class="secondary-btn" id="openWorkspaceBtn">Open folder</button><button class="primary-btn" id="documentsUploadBtn"><span>↥</span> Upload</button></div></div>
+          <div class="toolbar"><div class="inline-search-wrap"><span>⌕</span><input id="documentSearch" placeholder="Search documents..."></div><select id="documentTypeFilter"><option value="">All types</option></select><select id="documentSort"><option value="name">Name</option><option value="type">Type</option><option value="records">Records</option></select></div>
+          <div class="doc-list-head" id="docListHead">
+            <label class="doc-check" id="docSelectAllWrap"><input type="checkbox" id="docSelectAllInput" aria-label="Select all documents"><span></span></label>
+            <span class="doc-list-head-label" id="docListHeadLabel">0 documents</span>
+          </div>
+          <div id="documentsList" class="document-list"></div>
+        </section>
+
+        <section class="view" id="view-knowledge">
+          <div class="page-head"><div><h1>Knowledge Base</h1><p class="page-subtitle">See what is indexed and rebuild the workspace when needed.</p></div><button class="primary-btn" id="rebuildBtn"><span>↻</span> Rebuild index</button></div>
+          <div class="knowledge-grid">
+            <div class="panel-card wide"><div class="panel-head"><div><strong>Index status</strong><span>Current indexing state and workspace totals</span></div><span class="badge" id="indexBadge">Up to date</span></div><div id="indexDetails"></div></div>
+            <div class="panel-card"><div class="panel-head"><div><strong>Workspace summary</strong><span>Actual data from the index</span></div></div><div id="knowledgeSummary" class="quality-summary"></div></div>
+            <div class="panel-card"><div class="panel-head"><div><strong>Runtime</strong><span>Local model services managed by KORA</span></div></div><div id="knowledgeRuntime" class="quality-summary"></div></div>
+          </div>
+        </section>
+
+        <section class="view" id="view-library">
+          <div class="page-head"><div><h1>Library</h1><p class="page-subtitle">Find and reopen previous conversations.</p></div><button class="primary-btn" id="libraryNewChatBtn"><span>＋</span> New chat</button></div>
+          <div class="library-search"><span>⌕</span><input id="librarySearch" placeholder="Search conversations..."></div>
+          <div id="libraryGrid" class="library-grid"></div>
+        </section>
+
+        <section class="view" id="view-settings">
+          <div class="page-head"><div><h1>Settings</h1><p class="page-subtitle">Control your local workspace and interface.</p></div><div class="status-pill large"><span class="status-dot" id="settingsStatusDot"></span><span id="settingsStatusLabel">Checking…</span></div></div>
+          <div class="settings-shell">
+            <aside class="settings-tabs">
+              <button class="settings-tab active" data-settings="general">General</button>
+              <button class="settings-tab" data-settings="model">Model</button>
+              <button class="settings-tab" data-settings="system">System</button>
+              <button class="settings-tab" data-settings="knowledge">Knowledge</button>
+              <button class="settings-tab" data-settings="appearance">Appearance</button>
+              <button class="settings-tab" data-settings="about">About</button>
+            </aside>
+            <div class="settings-content">
+              <div class="settings-section active" data-settings-panel="general">
+                <div class="section-title">General</div>
+                <div class="setting-card"><div><strong>Local AI</strong><span id="aiControlSubtitle">Checking model state…</span></div><span class="badge neutral" id="aiStatusBadge">Starting</span></div>
+                <div class="setting-card"><div><strong>Workspace</strong><span id="workspacePath">—</span></div><button class="secondary-btn" id="openWorkspaceSettingsBtn">Open</button></div>
+                <div class="setting-card"><div><strong>Display name</strong><span>Stored locally in this KORA interface.</span></div><input id="profileNameInput" class="profile-input" maxlength="80" placeholder="Local user"></div>
+                <div class="form-actions"><button class="primary-btn" id="saveProfileBtn">Save name</button></div>
+                <div class="hardware-card" id="hardwareInfo"></div>
+              </div>
+
+              <div class="settings-section" data-settings-panel="model">
+                <div class="section-title">Model</div>
+                <div class="setting-card"><div><strong>Chat model</strong><span id="modelName">—</span></div><span class="badge neutral">Managed</span></div>
+                <div class="setting-card"><div><strong>Embedding model</strong><span id="embeddingModelName">—</span></div><span class="badge neutral">Managed</span></div>
+                <div class="setting-card"><div><strong>Model controls</strong><span>The current KORA runtime manages the active models automatically. Manual model switching and runtime start/stop controls are not exposed.</span></div><span class="badge neutral">Read-only</span></div>
+              </div>
+
+              <div class="settings-section" data-settings-panel="system">
+                <div class="section-title">Your computer</div>
+                <div class="hardware-card sys-specs" id="sysSpecs"><div><strong>Detecting…</strong><span>Hardware</span></div></div>
+                <div class="section-title sys-gap">AI configuration <span class="badge neutral" id="sysTier">—</span></div>
+                <div class="hardware-card sys-ai" id="sysAi"></div>
+                <div class="sys-warnings" id="sysWarnings" hidden></div>
+                <div class="section-title sys-gap">Performance</div>
+                <div class="setting-card"><div><strong>Mode</strong><span>Auto picks the best settings for this PC. Gentle uses less memory and CPU. CPU only never touches the graphics card.</span></div>
+                  <select id="sysProfile" class="profile-input"><option value="auto">Auto (recommended)</option><option value="low">Gentle (low resources)</option><option value="cpu">CPU only</option></select></div>
+                <div class="setting-card"><div><strong>Use integrated graphics</strong><span>Intel UHD/Iris and AMD APU graphics share system memory, so KORA skips them by default. Turn on to try them.</span></div>
+                  <label class="switch"><input type="checkbox" id="sysForceGpu"><span></span></label></div>
+                <div class="setting-card sys-env" id="sysEnvNote" hidden><div><strong>Manual overrides active</strong><span id="sysEnvList"></span></div></div>
+                <div class="form-actions"><button class="secondary-btn" id="sysRefreshBtn" type="button">Refresh</button><button class="secondary-btn" id="sysLogsBtn" type="button">Open logs folder</button><button class="primary-btn" id="sysSaveBtn" type="button">Save performance</button></div>
+                <p class="sys-note" id="sysNote">Changes apply the next time you start KORA.</p>
+              </div>
+
+              <div class="settings-section" data-settings-panel="knowledge">
+                <div class="section-title">Knowledge</div>
+                <div class="setting-card"><div><strong>Indexing</strong><span>Reuses unchanged files and embeddings when possible.</span></div><button class="secondary-btn" id="rebuildBtn2">Rebuild</button></div>
+                <div class="setting-card"><div><strong>OCR</strong><span>Scanned PDFs and supported image files are processed through Tesseract when available.</span></div><span class="badge neutral">Supported</span></div>
+                <div class="setting-card"><div><strong>Records</strong><span id="settingsRecordCount">—</span></div><span class="badge neutral">Indexed</span></div>
+              </div>
+
+              <div class="settings-section" data-settings-panel="appearance">
+                <div class="section-title">Appearance</div>
+                <div class="head-actions ap-top"><button class="secondary-btn" id="surpriseBtn" type="button"><span>✦</span> Surprise me</button><button class="secondary-btn" id="resetAppearance" type="button">Reset</button><span class="save-note">Saved automatically</span></div>
+                <div class="sub-title">Dark themes</div><div class="theme-grid"><button class="theme-card" data-theme-pick="system" type="button"><span class="tp" style="--p-bg:linear-gradient(90deg,#090b12 50%,#f3f4f8 50%);--p-s:linear-gradient(90deg,#151a26 50%,#fff 50%);--p-a:#8b6cff"><i></i><b><i></i><i></i></b></span><strong>System</strong></button><button class="theme-card" data-theme-pick="dark" type="button"><span class="tp" style="--p-bg:#090b12;--p-s:#151a26;--p-a:#8b6cff"><i></i><b><i></i><i></i></b></span><strong>Dark</strong></button><button class="theme-card" data-theme-pick="midnight" type="button"><span class="tp" style="--p-bg:#000;--p-s:#0e1016;--p-a:#8b6cff"><i></i><b><i></i><i></i></b></span><strong>Midnight</strong></button><button class="theme-card" data-theme-pick="ocean" type="button"><span class="tp" style="--p-bg:#061219;--p-s:#0f2230;--p-a:#1fbfa6"><i></i><b><i></i><i></i></b></span><strong>Ocean</strong></button><button class="theme-card" data-theme-pick="graphite" type="button"><span class="tp" style="--p-bg:#111113;--p-s:#1f1f23;--p-a:#b5a1ff"><i></i><b><i></i><i></i></b></span><strong>Graphite</strong></button><button class="theme-card" data-theme-pick="nord" type="button"><span class="tp" style="--p-bg:#242933;--p-s:#323947;--p-a:#88c0d0"><i></i><b><i></i><i></i></b></span><strong>Nord</strong></button><button class="theme-card" data-theme-pick="dracula" type="button"><span class="tp" style="--p-bg:#1b1c26;--p-s:#2b2d3d;--p-a:#bd93f9"><i></i><b><i></i><i></i></b></span><strong>Dracula</strong></button><button class="theme-card" data-theme-pick="sunset" type="button"><span class="tp" style="--p-bg:#140a10;--p-s:#27161f;--p-a:#ff7a59"><i></i><b><i></i><i></i></b></span><strong>Sunset</strong></button><button class="theme-card" data-theme-pick="forest" type="button"><span class="tp" style="--p-bg:#08130e;--p-s:#13291e;--p-a:#3ddc97"><i></i><b><i></i><i></i></b></span><strong>Forest</strong></button><button class="theme-card" data-theme-pick="cyber" type="button"><span class="tp" style="--p-bg:#07060f;--p-s:#141127;--p-a:#00e5ff"><i></i><b><i></i><i></i></b></span><strong>Cyber</strong></button><button class="theme-card" data-theme-pick="aurora" type="button"><span class="tp" style="--p-bg:#070d1a;--p-s:#121d38;--p-a:#5eead4"><i></i><b><i></i><i></i></b></span><strong>Aurora</strong></button></div>
+                <div class="sub-title">Light themes</div><div class="theme-grid"><button class="theme-card" data-theme-pick="light" type="button"><span class="tp" style="--p-bg:#f3f4f8;--p-s:#ffffff;--p-a:#8b6cff"><i></i><b><i></i><i></i></b></span><strong>Light</strong></button><button class="theme-card" data-theme-pick="sand" type="button"><span class="tp" style="--p-bg:#f6f1e7;--p-s:#f0e9dc;--p-a:#c2571a"><i></i><b><i></i><i></i></b></span><strong>Sand</strong></button><button class="theme-card" data-theme-pick="sakura" type="button"><span class="tp" style="--p-bg:#fbf2f5;--p-s:#f7e8ee;--p-a:#e0508a"><i></i><b><i></i><i></i></b></span><strong>Sakura</strong></button><button class="theme-card" data-theme-pick="mint" type="button"><span class="tp" style="--p-bg:#eef7f3;--p-s:#e4f1eb;--p-a:#13a37f"><i></i><b><i></i><i></i></b></span><strong>Mint</strong></button><button class="theme-card" data-theme-pick="sky" type="button"><span class="tp" style="--p-bg:#eef4fb;--p-s:#e3edf8;--p-a:#2f7de1"><i></i><b><i></i><i></i></b></span><strong>Sky</strong></button></div>
+                <div class="sub-title">Accent color</div><div class="swatches"><button class="swatch auto" data-accent="auto" type="button" aria-label="Match theme" title="Match theme"></button><button class="swatch" data-accent="violet" type="button" style="--sw:#8b6cff" aria-label="Violet" title="Violet"></button><button class="swatch" data-accent="blue" type="button" style="--sw:#4c8dff" aria-label="Blue" title="Blue"></button><button class="swatch" data-accent="teal" type="button" style="--sw:#1fbfa6" aria-label="Teal" title="Teal"></button><button class="swatch" data-accent="green" type="button" style="--sw:#3ddc97" aria-label="Green" title="Green"></button><button class="swatch" data-accent="amber" type="button" style="--sw:#f2a33a" aria-label="Amber" title="Amber"></button><button class="swatch" data-accent="rose" type="button" style="--sw:#f0567f" aria-label="Rose" title="Rose"></button><label class="swatch custom" title="Custom color"><input id="customAccent" type="color" value="#8b6cff"></label></div>
+                <div class="sub-title">Look and feel</div>
+                <div class="setting-card"><div><strong>Font</strong><span>The typeface used across the app.</span></div><select id="fontSelect"><option value="default">Default</option><option value="rounded">Rounded</option><option value="serif">Serif</option><option value="mono">Monospace</option></select></div>
+                <div class="setting-card"><div><strong>Background</strong><span>A pattern behind the interface.</span></div><select id="bgSelect"><option value="plain">Plain</option><option value="grid">Grid</option><option value="dots">Dots</option><option value="mesh">Animated mesh</option></select></div>
+                <div class="setting-card"><div><strong>Chat bubbles</strong><span>How messages are drawn.</span></div><select id="bubbleSelect"><option value="soft">Soft</option><option value="flat">Flat</option><option value="outline">Outlined</option></select></div>
+                <div class="setting-card"><div><strong>Chat width</strong><span>How wide the conversation column is.</span></div><select id="widthSelect"><option value="narrow">Narrow</option><option value="medium">Medium</option><option value="wide">Wide</option></select></div>
+                <div class="setting-card"><div><strong>Density</strong><span>Spacing between elements.</span></div><select id="densitySelect"><option value="compact">Compact</option><option value="comfortable">Comfortable</option><option value="spacious">Spacious</option></select></div>
+                <div class="setting-card slider-card"><div><strong>Text size</strong><span>Scales the whole interface.</span></div><div class="range-row"><input id="sizeRange" type="range" min="90" max="125" step="5"><span id="sizeVal"></span></div></div>
+                <div class="setting-card slider-card"><div><strong>Corner roundness</strong><span>From sharp to very round.</span></div><div class="range-row"><input id="roundRange" type="range" min="40" max="160" step="10"><span id="roundVal"></span></div></div>
+                <div class="sub-title">Effects</div>
+                <div class="setting-card"><div><strong>Glass effect</strong><span>Frosted, translucent panels. Turns on the background glow too.</span></div><label class="switch"><input id="glassToggle" type="checkbox"><span></span></label></div>
+                <div class="setting-card"><div><strong>Glass sidebar &amp; top bar</strong><span>Frosted navigation that lets the background show through.</span></div><label class="switch"><input id="navglassToggle" type="checkbox"><span></span></label></div>
+                <div class="setting-card slider-card" id="blurCard"><div><strong>Glass blur</strong><span>How strongly the background is softened.</span></div><div class="range-row"><input id="blurRange" type="range" min="0" max="40" step="1"><span id="blurVal"></span></div></div>
+                <div class="setting-card slider-card" id="alphaCard"><div><strong>Glass transparency</strong><span>Higher is more solid, lower is more see-through.</span></div><div class="range-row"><input id="alphaRange" type="range" min="30" max="95" step="1"><span id="alphaVal"></span></div></div>
+                <div class="setting-card"><div><strong>Background glow</strong><span>A soft accent-colored light behind the interface.</span></div><label class="switch"><input id="glowToggle" type="checkbox"><span></span></label></div>
+                <div class="setting-card"><div><strong>Animations</strong><span>Transitions and message motion.</span></div><label class="switch"><input id="motionToggle" type="checkbox"><span></span></label></div>
+              </div>
+
+              <div class="settings-section" data-settings-panel="about">
+                <div class="about">
+                  <div class="about-hero"><div class="kora-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></div><div><h3>KORA</h3><p>Knowledge Oriented Response Assistant</p></div></div>
+                  <p class="about-lead">A local general-purpose assistant that can use your workspace when relevant. Your files, index and chat history stay on this computer.</p>
+                  <div class="about-facts">
+                    <div><strong>Fully local</strong><span>The model and embeddings run on your machine.</span></div>
+                    <div><strong>Workspace-aware</strong><span>KORA can search indexed documents when your question needs them.</span></div>
+                    <div><strong>Source-aware</strong><span>Workspace answers can show the records used to answer.</span></div>
+                  </div>
+                  <div><h4>How an answer is made</h4><ol class="about-steps">
+                    <li><strong>Understand the question</strong><span>The local model decides what information it needs.</span></li>
+                    <li><strong>Use tools when needed</strong><span>KORA can search documents, read a document, list files, use conversation context and calculate.</span></li>
+                    <li><strong>Write the answer</strong><span>The local model turns the results into a normal response.</span></li>
+                    <li><strong>Show workspace sources</strong><span>When indexed records are used, their source metadata is shown below the answer.</span></li>
+                  </ol></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="bulk-bar" id="bulkBar" hidden><span id="bulkCount">0 selected</span><button class="ghost-btn" id="bulkSelectAllBtn">Select all</button><button class="ghost-btn" id="bulkCancelBtn">Cancel</button><button class="danger-btn" id="bulkRemoveBtn">Remove</button></div>
+
+  <div class="modal-backdrop" id="sourceModal" hidden>
+    <div class="modal source-modal" role="dialog" aria-modal="true">
+      <div class="modal-head"><div><h3 id="sourceModalTitle">Source</h3><span id="sourceModalLocation">—</span></div><div class="head-actions"><button class="secondary-btn danger-btn" id="sourceModalDelete" hidden>Remove</button><button class="icon-btn" id="sourceModalClose">×</button></div></div>
+      <pre id="sourceModalContent" class="source-content"></pre>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="uploadModal" hidden>
+    <div class="modal upload-modal" role="dialog" aria-modal="true">
+      <div class="modal-head"><div><h3>Upload documents</h3><span>Files stay inside the KORA workspace.</span></div><button class="icon-btn" id="uploadClose">×</button></div>
+      <div class="drop-zone" id="dropZone"><div class="drop-icon">↥</div><strong>Drop files here</strong><span>PDF · DOCX · PPTX · XLSX · CSV · JSON · TXT · Images</span><button class="secondary-btn" id="browseFilesBtn">Browse files</button><input id="fileInput" type="file" multiple hidden></div>
+      <div id="uploadQueue" class="upload-queue"></div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="commandPalette" hidden>
+    <div class="modal palette-modal"><div class="palette-input"><span>⌕</span><input id="paletteInput" placeholder="Search KORA or jump to..." autocomplete="off"></div><div id="paletteResults" class="palette-results"></div></div>
+  </div>
+
+  <div class="toast-stack" id="toastStack"></div>
+  <script src="media.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
