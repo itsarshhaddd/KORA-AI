@@ -1,0 +1,36 @@
+{
+  "hardware": {
+    "cpu_logical": 12,
+    "cpu_cores": 6,
+    "ram_total_gb": 15.924957275390625,
+    "ram_avail_gb": 6.5869903564453125,
+    "gpus": [
+      {
+        "name": "AMD Radeon RX 6700 XT",
+        "vendor": "amd",
+        "vram_gb": 11.984375,
+        "free_gb": null,
+        "integrated": false
+      }
+    ]
+  },
+  "profile": {
+    "tier": "gpu",
+    "mode": "gpu",
+    "backends": [
+      "vulkan"
+    ],
+    "chat_gpu_layers": 999,
+    "embed_gpu_layers": 999,
+    "chat_ctx": 16384,
+    "embed_ctx": 8192,
+    "chat_threads": 4,
+    "embed_threads": 2,
+    "chat_ubatch": null,
+    "use_mmproj": true,
+    "mmproj_offload": true,
+    "gpu_name": "AMD Radeon RX 6700 XT",
+    "summary": "gpu | gpu on AMD Radeon RX 6700 XT | ctx 16384 | threads 4 | gpu layers 999 | vision/audio on",
+    "warnings": []
+  }
+}

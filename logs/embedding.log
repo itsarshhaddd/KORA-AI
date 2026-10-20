@@ -1,0 +1,34 @@
+
+===== 2026-10-20 14:02:42 launching =====
+0.00.001.524 I srv  llama_server: initializing ...
+0.00.153.721 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)
+0.00.153.916 I srv  init_listene: The UI is disabled
+0.00.153.920 I srv  init_listene: Use --ui/--no-ui (or deprecated --webui/--no-webui) to enable/disable
+0.00.154.043 W srv  llama_server: security: no API key is set and CORS allows all origins (see https://github.com/ggml-org/llama.cpp/pull/25655)
+0.00.165.948 I srv    load_model: loading model 'C:\Users\Arshad Khan\Desktop\KoraAI-Build-Version_26\models\embeddinggemma-300m-Q4_0.gguf'
+0.01.349.130 W load: control-looking token:    212 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.01.913.539 W llama_context: n_ctx_seq (8192) > n_ctx_train (2048) -- possible training context overflow
+0.02.208.284 I cmn          init: llama threadpool init, n_threads = 2
+0.06.034.677 W srv    load_model: the slot context (8192) exceeds the training context of the model (2048) - capping
+0.06.034.690 W srv    load_model: speculative decoding not supported by this context
+0.06.034.693 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 2048, kv_unified = 'false'
+0.06.040.041 I srv  llama_server: model loaded
+0.06.040.050 I srv  llama_server: listening on http://127.0.0.1:8081
+0.13.123.861 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = -1
+0.13.123.979 I slot launch_slot_: id  0 | task 0 | processing task, is_child = 0
+0.13.896.004 I slot      release: id  0 | task 0 | stop processing: n_tokens = 14, truncated = 0
+0.13.920.887 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 13747264
+0.13.920.896 I slot launch_slot_: id  0 | task 2 | processing task, is_child = 0
+0.13.931.801 I slot      release: id  0 | task 2 | stop processing: n_tokens = 11, truncated = 0
+0.19.503.937 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 13783061
+0.19.503.950 I slot launch_slot_: id  0 | task 4 | processing task, is_child = 0
+0.19.876.031 I slot      release: id  0 | task 4 | stop processing: n_tokens = 33, truncated = 0
+0.19.901.880 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 19727291
+0.19.901.890 I slot launch_slot_: id  0 | task 6 | processing task, is_child = 0
+0.19.912.721 I slot      release: id  0 | task 6 | stop processing: n_tokens = 23, truncated = 0
+0.23.935.848 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 19763981
+0.23.935.856 I slot launch_slot_: id  0 | task 8 | processing task, is_child = 0
+0.23.948.045 I slot      release: id  0 | task 8 | stop processing: n_tokens = 26, truncated = 0
+0.30.711.755 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 23799305
+0.30.711.765 I slot launch_slot_: id  0 | task 10 | processing task, is_child = 0
+0.30.723.344 I slot      release: id  0 | task 10 | stop processing: n_tokens = 16, truncated = 0

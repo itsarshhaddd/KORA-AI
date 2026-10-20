@@ -1,0 +1,20 @@
+2026-10-20 14:03:04,805 INFO    [MainThread] kora: ============================================================
+2026-10-20 14:03:04,939 INFO    [MainThread] kora: KORA starting | frozen=False | python=3.14.7 | Windows-11-10.0.26300-SP0
+2026-10-20 14:03:04,939 INFO    [MainThread] kora: root=C:\Users\Arshad Khan\Desktop\KoraAI-Build-Version_26
+2026-10-20 14:03:04,940 INFO    [MainThread] kora: llama-server present=True | models: embeddinggemma-300m-Q4_0.gguf, gemma-4-E2B-it-Q4_K_M.gguf, mmproj-F16.gguf
+2026-10-20 14:03:06,115 INFO    [kora-models] kora.autotune: Hardware: Hardware(cpu_logical=12, cpu_cores=6, ram_total_gb=15.924957275390625, ram_avail_gb=6.452793121337891, gpus=[GPU(name='AMD Radeon RX 6700 XT', vendor='amd', vram_gb=11.984375, free_gb=None, integrated=False)])
+2026-10-20 14:03:06,116 INFO    [kora-models] kora.autotune: AI profile: gpu | gpu on AMD Radeon RX 6700 XT | ctx 16384 | threads 4 | gpu layers 999 | vision/audio on
+2026-10-20 14:03:06,138 INFO    [kora-models] kora.runtime: Both model services are ready.
+2026-10-20 14:03:06,138 INFO    [kora-models] kora.runtime: Running with: gpu:runtime (gpu | gpu on AMD Radeon RX 6700 XT | ctx 16384 | threads 4 | gpu layers 999 | vision/audio on)
+2026-10-20 14:03:44,456 INFO    [MainThread] kora: ============================================================
+2026-10-20 14:03:44,519 INFO    [MainThread] kora: KORA starting | frozen=False | python=3.14.7 | Windows-11-10.0.26300-SP0
+2026-10-20 14:03:44,520 INFO    [MainThread] kora: root=C:\Users\Arshad Khan\Desktop\KoraAI-Build-Version_26
+2026-10-20 14:03:44,520 INFO    [MainThread] kora: llama-server present=True | models: embeddinggemma-300m-Q4_0.gguf, gemma-4-E2B-it-Q4_K_M.gguf, mmproj-F16.gguf
+2026-10-20 14:03:45,416 INFO    [Thread-1 (_bootstrap)] kora: boot: Checking your hardware…
+2026-10-20 14:03:46,081 INFO    [Thread-1 (_bootstrap)] kora.autotune: Hardware: Hardware(cpu_logical=12, cpu_cores=6, ram_total_gb=15.924957275390625, ram_avail_gb=6.5869903564453125, gpus=[GPU(name='AMD Radeon RX 6700 XT', vendor='amd', vram_gb=11.984375, free_gb=None, integrated=False)])
+2026-10-20 14:03:46,082 INFO    [Thread-1 (_bootstrap)] kora.autotune: AI profile: gpu | gpu on AMD Radeon RX 6700 XT | ctx 16384 | threads 4 | gpu layers 999 | vision/audio on
+2026-10-20 14:03:46,082 INFO    [Thread-1 (_bootstrap)] kora: boot: Loading engine…
+2026-10-20 14:03:47,174 INFO    [Thread-1 (_bootstrap)] kora: boot: Starting server…
+2026-10-20 14:03:47,202 INFO    [kora-models] kora.runtime: Both model services are ready.
+2026-10-20 14:03:47,202 INFO    [kora-models] kora.runtime: Running with: gpu:runtime (gpu | gpu on AMD Radeon RX 6700 XT | ctx 16384 | threads 4 | gpu layers 999 | vision/audio on)
+2026-10-20 14:03:47,944 INFO    [Thread-1 (_bootstrap)] kora: boot: Opening KORA…
